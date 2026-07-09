@@ -1,6 +1,10 @@
 ﻿using System;
 namespace ManageCars
 {
+    interface INpyment
+    {
+        void terminal();
+    }
     interface INorderbale
     {
         bool IsAvilbale(); 
@@ -17,9 +21,7 @@ namespace ManageCars
             carType = type;
 
         }
-        public abstract int CheckIn();
-            
-        public abstract int CheckOut();
+        public abstract int Time();
 
 
     }
@@ -27,67 +29,40 @@ namespace ManageCars
     {
         public RegularCar (string carnumbar, string type) 
             : base(carnumbar, type) { }
-        public override int CheckIn()
+        public override int Time()
         {
             string now = DateTime.Now.ToString().Split()[1];
             bool result = int.TryParse(now, out int entryTime);
             return entryTime;
         }
-        public override int CheckOut()
-        {
-            string now = DateTime.Now.ToString().Split()[1];
-            bool result = int.TryParse(now, out int exitTime);
-            return exitTime;
-        }
-           
 
-        public bool IsAvilbale()
-        {
-            return true;
-        }
+        public bool IsAvilbale() => true;
+
     }
     public class DisabledCars :Vehicle,INorderbale
     {
         public DisabledCars(string carnumbar, string type)
             : base(carnumbar, type) { }
-        public override int CheckIn()
+        public override int Time()
         {
             string now = DateTime.Now.ToString().Split()[1];
             bool result = int.TryParse(now, out int entryTime);
             return entryTime;
         }
-            
-        public override int CheckOut()
-        {
-            string now = DateTime.Now.ToString().Split()[1];
-            bool result = int.TryParse(now, out int exitTime);
-            return exitTime;
-        }
-        public bool IsAvilbale()
-        {
-            return true;
-        }
+
+        public bool IsAvilbale() => true;
     }
     public class Motorcycles:Vehicle,INorderbale
     {
         public Motorcycles(string carnumbar, string type)
             : base(carnumbar, type) { }
-        public override int CheckIn()
+        public override int Time()
         {
             string now = DateTime.Now.ToString().Split()[1];
             bool result = int.TryParse(now, out int entryTime);
             return entryTime;
         }
-        public override int CheckOut()
-        {
-            string now = DateTime.Now.ToString().Split()[1];
-            bool result = int.TryParse(now, out int exitTime);
-            return exitTime;
-        }
-        public bool IsAvilbale()
-        {
-            return false;
-        }
+        public bool IsAvilbale() => false;
     }
 
 }

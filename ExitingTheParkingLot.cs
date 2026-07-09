@@ -4,42 +4,47 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrderManagement
+namespace ExitingTheParkingLot
 {
-    
-    class OrderManage
+    public class Exit
     {
-
-        string[] ORDERLIST = new string[100];
-        
+        Entrance entry = new Entrance();
         string CARNUM = new Entrance().carNum();
         string CARTYPE = new Entrance().carType();
-        int counter = 0;
-        public bool isOrderbale()
+
+        public void checkOut()
         {
             
+
+            for (int i = 0; i > entry.getAllCarsInParking().Length; i++) 
+            {
+                if (CARNUM == entry.getAllCarsInParking()[i])
+                {
+                    entry.getAllCarsInParking()[i].Remove(i);
+                }
+
+
+            }
+        }
+        public int isOrderbale()
+        {
+
             switch (CARTYPE)
             {
                 case "regularcar":
                     RegularCar regularCar = new RegularCar(CARNUM, CARTYPE);
-                    return regularCar.IsAvilbale();
+                    return regularCar.Time();
                 case "disabledcars":
                     DisabledCars disabledCars = new DisabledCars(CARNUM, CARTYPE);
-                    return disabledCars.IsAvilbale();
+                    return disabledCars.Time();
                 case "motorcycles":
                     Motorcycles motorcycles = new Motorcycles(CARNUM, CARTYPE);
-                    return motorcycles.IsAvilbale();
+                    return motorcycles.Time();
                 default:
                     { throw new ArgumentException("Type of vehicle not found."); }
             }
         }
-        public void createOrder()
-        {
-            if (isOrderbale())
-            { ORDERLIST[counter] = CARNUM; counter++; }
 
-        }
-        public string[] getAllOrders() => ORDERLIST;
-        
     }
 }
+    

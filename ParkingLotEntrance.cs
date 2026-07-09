@@ -1,4 +1,5 @@
 ﻿using ManageCars;
+using OrderManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,44 +31,56 @@ namespace ParkingLotEntrance
             return type;
 
         }
-        public string checkin()
+        public string[] getAllCarsInParking() => CARSINPARKING;
+        public Vehicle checkin()
         {
-            string carnum = carNum();
-            foreach (string id in CARSINPARKING)
-            {
-                if (carnum == id)
-                    return $"the car {id} alredy in the parking lot.";
-            }
-
             string cartype = carType();
-            
+            string carnum = carNum();
+            foreach (string carID in CARSINPARKING)
+            {
+                if (carnum == carID)
+                {
+                    throw new ArgumentException("");
+                }
+            }
+            OrderManage order = new OrderManage();
+            foreach (string carID in order.getAllOrders())
+            {
+                if (carnum == carID)
+                {
+                    Console.WriteLine("There is an order placed on this vehicle.");
+                }
+            }
 
             switch (cartype)
             {
                 case "regularcar":
-                    RegularCar regularCar = new RegularCar(carnum, cartype);
+                    RegularCar regularCar = new RegularCar(carnum, cartype); ;
                     CARSINPARKING[counter] = regularCar.carNumber;
                     CARSTYPE[counter] = regularCar.carType;
-                    CHECKIN[counter] = regularCar.CheckIn();
+                    CHECKIN[counter] = regularCar.Time();
                     counter++;
-                    { return $"car type: {regularCar.carType},car ID: {regularCar.carNumber},Check-in time: {regularCar.CheckIn()}"; }
+                    Console.WriteLine("geat open");
+                    { return regularCar; }
                 case "disabledcars":
                     DisabledCars disabledCars = new DisabledCars(carnum, cartype);
                     CARSINPARKING[counter] = disabledCars.carNumber;
                     CARSTYPE[counter] = disabledCars.carType;
-                    CHECKIN[counter] = disabledCars.CheckIn();
-                    { return $"car type: {disabledCars.carType},car ID: {disabledCars.carNumber},Check-in time: {disabledCars.CheckIn()}"; }
+                    CHECKIN[counter] = disabledCars.Time();
+                    { return disabledCars; }
                 case "motorcycles":
                     Motorcycles motorcycles = new Motorcycles(carnum, cartype);
                     CARSINPARKING[counter] = motorcycles.carNumber;
                     CARSTYPE[counter] = motorcycles.carType;
-                    CHECKIN[counter] = motorcycles.CheckIn();
+                    CHECKIN[counter] = motorcycles.Time();
                     counter++;
-                    { return $"car type: {motorcycles.carType},car ID: {motorcycles.carNumber},Check-in time: {motorcycles.CheckIn()}"; }
+                    { return motorcycles; }
                 default:
-                    { throw new ArgumentException(""); }
+                    { throw new ArgumentException("Type of vehicle not found."); }
             }
+            
         }
+
    }
 
 }

@@ -9,8 +9,8 @@ namespace ManagePayment
         static void Main()
         {
             string tt = DateTime.Now.ToString().Split()[1];
-            bool result = int.TryParse(tt,out int i);
-            
+            bool result = int.TryParse(tt, out int i);
+
             Console.WriteLine(i - i);
 
         }
